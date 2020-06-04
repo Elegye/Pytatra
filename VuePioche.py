@@ -11,7 +11,6 @@ def dessine(fenetre, pioche, gauche):
 	largeur_fenetre = Fenetre.largeur(fenetre)
 	hauteur_fenetre = Fenetre.hauteur(fenetre)
 	y0 = hauteur_fenetre - len(pioche)*20
-	print(pioche)
 
 	for iteration, exemplaires in enumerate(pioche):
 		planchette = Exemplaires.planchette(exemplaires)

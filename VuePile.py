@@ -23,8 +23,6 @@ def dessine(fenetre, pile):
 		else :
 			dessine_croix(fenetre, '#4EAC5B', x_croix, y_croix)
 
-
 def dessine_croix(fenetre, color, x, y) :
-
 	Fenetre.toile(fenetre).create_line(x-VuePlanchette.pixels(0.3), y-VuePlanchette.pixels(0.3), x+VuePlanchette.pixels(0.3), y+VuePlanchette.pixels(0.3), fill = color, width = 2)
 	Fenetre.toile(fenetre).create_line(x-VuePlanchette.pixels(0.3), y+VuePlanchette.pixels(0.3), x+VuePlanchette.pixels(0.3), y-VuePlanchette.pixels(0.3), fill = color, width = 2)

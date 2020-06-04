@@ -46,7 +46,6 @@ def passeJoueurSuivant(jeu):
 def joue(jeu):
 	majVues(jeu)
 	activite(jeu)
-	majVues(jeu)
 	Fenetre.bouclePrincipale(fenetre(jeu))
 
 def majVues(jeu):
@@ -66,19 +65,15 @@ def majVues(jeu):
 
 def activite(jeu):
 	nombrePlanchettes = Pioche.nombrePlanchettes(Joueur.pioche(joueurCourant(jeu)))
-	desequilibre = Empilement.desequilibre(Empilement.cree((14,2),0))
+	desequilibre = False
 	debutPartie = True
 	partieFinie = False
-	while nombrePlanchettes != 0 and desequilibre == False and partieFinie == False:
+	while nombrePlanchettes != 0 and desequilibre == False and partieFinie != True:
 		planchette = selectionnePlanchette(jeu)
-		print("Planchette sélectionnée :", planchette)
-		majVues(jeu)
 		if planchette == True:
 			partieFinie = True
-			break
 		else:
-			pioche=Joueur.pioche(joueurs(jeu)[indiceJoueur(jeu)])
-			print(pioche)
+			pioche = Joueur.pioche(joueurCourant(jeu))
 			Pioche.retire(pioche, Planchette.numero(planchette)) #On retire la planchette de la pioche.
 			if debutPartie: #Si c'est le début de partie
 				Pile.empileEtCalcule(pile(jeu), planchette, 0)
@@ -87,7 +82,6 @@ def activite(jeu):
 				debutPartie = False
 			else: #Si ce n'est pas le début de partie
 				passeJoueurSuivant(jeu)
-				print("OK")
 				decalage = choisisDecalage(jeu, planchette)
 				if decalage == None:
 					partieFinie = True
@@ -96,22 +90,36 @@ def activite(jeu):
 					for empilement in pile(jeu):
 						if Empilement.desequilibre(empilement):
 							desequilibre = True
-					#nombrePlanchettes = Pioche.nombrePlanchettes(Joueur.pioche(joueurCourant(jeu)))
+					nombrePlanchettes = Pioche.nombrePlanchettes(Joueur.pioche(joueurCourant(jeu)))
 				majVues(jeu)
+	if desequilibre:
+		Dialogue.afficheMessage("{joueur} gagne !".format(joueur=Joueur.nom(joueurCourant(jeu))))
+	else:
+		if Pioche.nombrePlanchettes(Joueur.pioche(joueurCourant(jeu))) == 0:
+			Dialogue.afficheMessage("Egalité de la partie")
+		else:
+			Dialogue.afficheMessage("On ne sait pas trop là")
+	#Rejouer une partie ?
+	rejouer = Dialogue.yesNoMessage("Voulez-vous recommencer une partie ?")
+	if rejouer:
+		jeu = Jeu.cree()
+		Jeu.joue(jeu)
+	else:
+		Dialogue.afficheMessage("Très bien, au revoir ! Comme disait si bien Giscard")
+		Fenetre.quitte(fenetre(jeu))
 
 def selectionnePlanchette(jeu):
 	numero = 0
 	while Pioche.contient(Joueur.pioche(joueurCourant(jeu)), numero) != True:
-		numero = Dialogue.saisisEntier("Joueur {joueur} | Indiquez le numéro de la planchette :".format(joueur=indiceJoueur(jeu)+1))
+		numero = Dialogue.saisisEntier("{joueur} | Indiquez le numéro de la planchette :".format(joueur=Joueur.nom(joueurCourant(jeu))))
 	numero = str(numero)
-	print(numero)
 	marge = int(numero[0])
-	longueur = int(numero[1])+2*marge
+	longueur = int(numero[1]) + 2 * marge
 	return Planchette.cree(longueur, marge)
 
 def choisisDecalage(jeu, planchetteAPoser):
-	decalage = 0 #Par défaut on met un décalage de 0
+	decalage = Dialogue.saisisEntier("{joueur} | Précisez le décalage".format(joueur=Joueur.nom(joueurCourant(jeu))))
 	sommet = Pile.sommet(pile(jeu)) #Récupération de la pile du sommet.
-	while abs(decalage) > Planchette.marge(planchetteAPoser) or abs(decalage) > sommet[0][0] or decalage==0:
-		decalage = Dialogue.saisisEntier("Joueur {joueur} | Indiquez le numéro de la planchette :".format(joueur=indiceJoueur(jeu)+1))
+	while abs(decalage) > Planchette.marge(planchetteAPoser) or abs(decalage) > sommet[0][0]:
+		decalage = Dialogue.saisisEntier("{joueur} | Précisez le décalage".format(joueur=Joueur.nom(joueurCourant(jeu))))
 	return decalage
