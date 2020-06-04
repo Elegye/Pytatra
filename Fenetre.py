@@ -44,4 +44,5 @@ def quandOuverte(fenetre, fonction, argument):
 	tk(fenetre).bind('<Map>', fonctionInterne)
 
 def quitte(fenetre):
+	tk(fenetre).destroy()
 	tk(fenetre).quit()

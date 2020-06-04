@@ -26,5 +26,7 @@ def dessine(fenetre, planchette, x0, y0):
 	:return: Dessine dans une fenetre (retourne rien).
 	:rtype: void
 	"""
+	#Marge
 	Fenetre.toile(fenetre).create_rectangle(x0, y0, x0+pixels(Planchette.longueur(planchette)), y0+pixels(Planchette.Epaisseur), fill="sky blue")
+	#Par dessus on met le "coeur" de la planchette.
 	Fenetre.toile(fenetre).create_rectangle(x0+pixels(Planchette.marge(planchette)), y0, x0+pixels(Planchette.longueur(planchette)-Planchette.marge(planchette)), y0+pixels(Planchette.Epaisseur), fill="blue")

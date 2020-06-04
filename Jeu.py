@@ -70,7 +70,7 @@ def activite(jeu):
 	partieFinie = False
 	while nombrePlanchettes != 0 and desequilibre == False and partieFinie != True:
 		planchette = selectionnePlanchette(jeu)
-		if planchette == True:
+		if planchette == None:
 			partieFinie = True
 		else:
 			pioche = Joueur.pioche(joueurCourant(jeu))
@@ -92,26 +92,30 @@ def activite(jeu):
 							desequilibre = True
 					nombrePlanchettes = Pioche.nombrePlanchettes(Joueur.pioche(joueurCourant(jeu)))
 				majVues(jeu)
-	if desequilibre:
+
+	if desequilibre: #S'il y a un déséquilibre
 		Dialogue.afficheMessage("{joueur} gagne !".format(joueur=Joueur.nom(joueurCourant(jeu))))
-	else:
+	else: #S'il n'y en a pas.
 		if Pioche.nombrePlanchettes(Joueur.pioche(joueurCourant(jeu))) == 0:
 			Dialogue.afficheMessage("Egalité de la partie")
 		else:
-			Dialogue.afficheMessage("On ne sait pas trop là")
+			Dialogue.afficheMessage("La partie est terminée ! Un des joueurs a abandonné")
+			#SAUVEGARDE
+
 	#Rejouer une partie ?
 	rejouer = Dialogue.yesNoMessage("Voulez-vous recommencer une partie ?")
 	if rejouer:
-		jeu = Jeu.cree()
-		Jeu.joue(jeu)
-	else:
-		Dialogue.afficheMessage("Très bien, au revoir ! Comme disait si bien Giscard")
 		Fenetre.quitte(fenetre(jeu))
+		jeu = cree() #On recrée une partie, en mettant jeu à "zéro"
+		joue(jeu) #Ensuite cette fonction va s'occuper de tout nettoyer et de jouer
+	#Là je mettais un petit message pour dire au revoir mais ça faisait beaucoup de messageBox d'un coup : pas agréable du tout.
 
 def selectionnePlanchette(jeu):
 	numero = 0
 	while Pioche.contient(Joueur.pioche(joueurCourant(jeu)), numero) != True:
 		numero = Dialogue.saisisEntier("{joueur} | Indiquez le numéro de la planchette :".format(joueur=Joueur.nom(joueurCourant(jeu))))
+		if numero == None: #Si c'est cancel
+			return None
 	numero = str(numero)
 	marge = int(numero[0])
 	longueur = int(numero[1]) + 2 * marge
@@ -120,6 +124,9 @@ def selectionnePlanchette(jeu):
 def choisisDecalage(jeu, planchetteAPoser):
 	decalage = Dialogue.saisisEntier("{joueur} | Précisez le décalage".format(joueur=Joueur.nom(joueurCourant(jeu))))
 	sommet = Pile.sommet(pile(jeu)) #Récupération de la pile du sommet.
-	while abs(decalage) > Planchette.marge(planchetteAPoser) or abs(decalage) > sommet[0][0]:
+	longueur_sommet = Planchette.longueur(Empilement.planchette(sommet))
+	while abs(decalage) > Planchette.marge(planchetteAPoser) or abs(decalage) > longueur_sommet:
 		decalage = Dialogue.saisisEntier("{joueur} | Précisez le décalage".format(joueur=Joueur.nom(joueurCourant(jeu))))
+		if numero == None:
+			return None
 	return decalage
