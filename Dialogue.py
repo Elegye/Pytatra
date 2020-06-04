@@ -29,4 +29,4 @@ def saisisNombre(message, entier):
 	return saisie
 
 def yesNoMessage(message):
-	return askyesno(Fenetre.Titre, "Voulez-vous recommencer le jeu ?")
+	return askyesno(Fenetre.Titre, message)

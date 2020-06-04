@@ -8,7 +8,7 @@ import Pioche
 import Planchette
 import VuePioche
 import VuePile
-
+import pickle
 
 # Etape 5.1
 
@@ -101,13 +101,14 @@ def activite(jeu):
 		else:
 			Dialogue.afficheMessage("La partie est terminée ! Un des joueurs a abandonné")
 			#SAUVEGARDE
+			sauvegarde_jeu = (pile(jeu), joueurs(jeu), {'indiceJoueur': indiceJoueur(jeu)})
+			pickle.dump(sauvegarde_jeu, open("save.txt", "wb"))
 
 	#Rejouer une partie ?
 	rejouer = Dialogue.yesNoMessage("Voulez-vous recommencer une partie ?")
+	Fenetre.quitte(fenetre(jeu)) #On supprime dans tous les cas la fenêtre
 	if rejouer:
-		Fenetre.quitte(fenetre(jeu))
-		jeu = cree() #On recrée une partie, en mettant jeu à "zéro"
-		joue(jeu) #Ensuite cette fonction va s'occuper de tout nettoyer et de jouer
+		joue(cree()) #On recréer les données puis on nettoie et on peut joueur à nouveau.
 	#Là je mettais un petit message pour dire au revoir mais ça faisait beaucoup de messageBox d'un coup : pas agréable du tout.
 
 def selectionnePlanchette(jeu):
