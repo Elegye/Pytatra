@@ -2,6 +2,9 @@ import Planchette
 import Empilement
 
 def cree():
+	"""
+	Créé une liste d'empilement, qui correspond à une Pile
+	"""
 	return []
 
 def estVide(pile):

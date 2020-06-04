@@ -24,7 +24,12 @@ def tk(fenetre):
 	return fenetre[3]
 
 def bouclePrincipale(fenetre):
+	tk(fenetre).bind('<Configure>', responsive)
 	tk(fenetre).mainloop()
+
+def responsive(event):
+	print("RESIZE")
+	print(event.width)
 
 # Etape 5
 
