@@ -99,16 +99,17 @@ def activite(jeu):
 		if Pioche.nombrePlanchettes(Joueur.pioche(joueurCourant(jeu))) == 0:
 			Dialogue.afficheMessage("Egalité de la partie")
 		else:
-			Dialogue.afficheMessage("La partie est terminée ! Un des joueurs a abandonné")
+			save = Dialogue.yesNoMessage("La partie est terminée ! Voulez-vous sauvegarder ?")
 			#SAUVEGARDE
-			sauvegarde_jeu = (pile(jeu), joueurs(jeu), {'indiceJoueur': indiceJoueur(jeu)})
-			pickle.dump(sauvegarde_jeu, open("save.txt", "wb"))
+			if save:
+				sauvegarde_jeu = (pile(jeu), joueurs(jeu), {'indiceJoueur': indiceJoueur(jeu)})
+				pickle.dump(sauvegarde_jeu, open("save.txt", "wb"))
 
 	#Rejouer une partie ?
 	rejouer = Dialogue.yesNoMessage("Voulez-vous recommencer une partie ?")
 	Fenetre.quitte(fenetre(jeu)) #On supprime dans tous les cas la fenêtre
 	if rejouer:
-		joue(cree()) #On recréer les données puis on nettoie et on peut joueur à nouveau.
+		joue(cree()) #On recrée les données puis on nettoie et on peut joueur à nouveau.
 	#Là je mettais un petit message pour dire au revoir mais ça faisait beaucoup de messageBox d'un coup : pas agréable du tout.
 
 def selectionnePlanchette(jeu):
@@ -128,6 +129,6 @@ def choisisDecalage(jeu, planchetteAPoser):
 	longueur_sommet = Planchette.longueur(Empilement.planchette(sommet))
 	while abs(decalage) > Planchette.marge(planchetteAPoser) or abs(decalage) > longueur_sommet:
 		decalage = Dialogue.saisisEntier("{joueur} | Précisez le décalage".format(joueur=Joueur.nom(joueurCourant(jeu))))
-		if numero == None:
+		if decalage == None:
 			return None
 	return decalage
