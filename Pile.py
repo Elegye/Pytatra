@@ -8,7 +8,7 @@ def cree():
 	return []
 
 def estVide(pile):
-	if len(pile) == 0 :
+	if len(pile) == 0:
 		return True
 	else:
 		return False
