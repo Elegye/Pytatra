@@ -26,13 +26,16 @@ def dessine(fenetre, planchette, x0, y0):
 	:return: Dessine dans une fenetre (retourne rien).
 	:rtype: void
 	"""
+	longueur = pixels(Planchette.longueur(planchette))
+	hauteur = pixels(Planchette.Epaisseur)
+	marge = pixels(Planchette.marge(planchette))
+
 	#Marge
-	Fenetre.toile(fenetre).create_rectangle(x0, y0, x0+pixels(Planchette.longueur(planchette)), y0+pixels(Planchette.Epaisseur), fill="sky blue")
+	Fenetre.toile(fenetre).create_rectangle(x0, y0, x0 + longueur, y0 + hauteur, fill="sky blue")
 	#Par dessus on met le "coeur" de la planchette.
-	Fenetre.toile(fenetre).create_rectangle(x0+pixels(Planchette.marge(planchette)), y0, x0+pixels(Planchette.longueur(planchette)-Planchette.marge(planchette)), y0+pixels(Planchette.Epaisseur), fill="blue")
+	Fenetre.toile(fenetre).create_rectangle(x0 + marge, y0, x0 + (longueur-marge), y0 + hauteur, fill="blue")
+
 	#On crée le polygone du dessus
-"""
-fenetre[0].create_polygon((x0,y0),(x0+longueur,y0),(x0+longueur+5,y0-5),(x0+5,y0-5), fill='light blue',outline="black")#haut
-    fenetre[0].create_polygon((x0+marge,y0),(x0+longueur-marge,y0),(x0+longueur+5-marge,y0-5),(x0+5+marge,y0-5), fill="blue",outline="black")#haut
-    fenetre[0].create_polygon((x0+longueur, y0+Facteur),(x0+longueur+5,y0+Facteur-5),(x0+longueur+5,y0-5),(x0+longueur,y0), fill='light blue',outline="black")
-"""
+	Fenetre.toile(fenetre).create_polygon((x0,y0), (x0+longueur,y0), (x0+longueur+8,y0-8), (x0+8,y0-8), fill='light blue', outline="black")
+	Fenetre.toile(fenetre).create_polygon((x0+marge,y0), (x0+longueur-marge,y0), (x0+longueur+8-marge,y0-8), (x0+8+marge,y0-8), fill="blue", outline="black")
+	Fenetre.toile(fenetre).create_polygon((x0+longueur, y0+Facteur), (x0+longueur+8,y0+Facteur-8), (x0+longueur+8,y0-8), (x0+longueur,y0), fill='light blue', outline="black")

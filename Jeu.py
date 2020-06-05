@@ -201,6 +201,8 @@ def selectionnePlanchette(jeu):
 
 def choisisDecalage(jeu, planchetteAPoser):
 	decalage = Dialogue.saisisEntier("{joueur} | Précisez le décalage".format(joueur=Joueur.nom(joueurCourant(jeu))))
+	if decalage == None:
+		return None
 
 	sommet = Empilement.planchette(Pile.sommet(pile(jeu))) #Récupération de la pile du sommet.
 	longueur_sommet = Planchette.longueur(sommet)

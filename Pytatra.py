@@ -1,6 +1,15 @@
-from tkinter import *
-from os import path
-import pickle
+###############################################################################
+# Alexandre Halopé 05/06/2020 Version Finale
+# Repository : https://github.com/Elegye/Pytatra
+# Au premier démarrage, en l'absence de sauvegarde ou de replay disponibles,
+# le jeu se lance. Avec une sauvegarde ou un replay, on peut choisir entre
+# reprendre une sauvegarde, ou une partie normale.
+#
+###############################################################################
+
+from tkinter import * # Juste pour créer les boutons.
+from os import path # Vérifier si les fichiers existent.
+import pickle #Pickle pour sauvegarder des données.
 import Jeu
 import Dialogue
 import Fenetre
