@@ -59,6 +59,9 @@ def joue(jeu, is_replay=False):
 	Fenetre.bouclePrincipale(fenetre(jeu))
 
 def majVues(jeu):
+	"""
+	Met à jour la vue.
+	"""
 	#D'abord on efface les graphiques.
 	Fenetre.effaceGraphiques(fenetre(jeu))
 	#Puis on dessine la pile (initialement vide)
@@ -74,6 +77,11 @@ def majVues(jeu):
 # Etape 5.3
 
 def activite(jeu):
+	"""
+	Applique le diagramme d'activité de la Notice de l'Etape 5.
+	:param jeu: Le Jeu.
+	:type jeu: Tuple.
+	"""
 	nombrePlanchettes = Pioche.nombrePlanchettes(Joueur.pioche(joueurCourant(jeu)))
 	desequilibre = False
 	debutPartie = True
@@ -131,6 +139,14 @@ def activite(jeu):
 	#Là je mettais un petit message pour dire au revoir mais ça faisait beaucoup de messageBox d'un coup : pas agréable du tout.
 
 def saveReplay(a_ecrire):
+	"""
+	Permet d'écrire dans le fichier de replay.
+
+	:param a_ecrire: la donnée à écrire.
+	:type a_ecrire: ALL.
+
+	:return: Nothing.
+	"""
 	with open("replay.txt", "a") as file:
 		file.write(str(a_ecrire)+";")
 
@@ -189,6 +205,18 @@ def replay(jeu, iteration=0):
 				VueJeu.affichageMessage(Fenetre.toile(fenetre(jeu)), Joueur.nom(joueurs(jeu)[dernier_joueur])+" perd !", 500,300)
 
 def selectionnePlanchette(jeu):
+	"""
+	Sélection d'une planchette.
+	Par défaut, le numéro vaut 0. Tant que ce numéro saisi n'est pas dans la
+	pioche du joueur courant, on redemande au joueur de saisir un numéro de planchette valide.
+	Si le joueur clique sur "Cancel", on retourne None.
+
+	:param jeu: Type JEU.
+	:type jeu: Tuple.
+
+	:return: Planchette OU None.
+	:rtype: Type Planchette OU None.
+	"""
 	numero = 0
 	while Pioche.contient(Joueur.pioche(joueurCourant(jeu)), numero) != True:
 		numero = Dialogue.saisisEntier("{joueur} | Indiquez le numéro de la planchette :".format(joueur=Joueur.nom(joueurCourant(jeu))))
@@ -196,10 +224,25 @@ def selectionnePlanchette(jeu):
 			return None
 	numero = str(numero)
 	marge = int(numero[0])
-	longueur = int(numero[1]) + 2 * marge
+	longueur = int(numero[1]) + 2 * marge #Récupération à la sauvage de la longueur et de la marge.
 	return Planchette.cree(longueur, marge)
 
 def choisisDecalage(jeu, planchetteAPoser):
+	"""
+	Choix d'un décalage.
+	Demande au joueur courant de préciser le décalage. Si le joueur appuie sur Cancel, on retourne None.
+	Tant que le décalage saisi n'est pas valide (selon définition Etape 1, règles du jeu), le joueur saisi un décalage.
+	Lorsqu'il est valide, il retourne l'entier qui correspond au décalage.
+
+	:param jeu: Le Jeu.
+	:param planchetteAPoser: La planchette à poser.
+
+	:type jeu: Tuple de type Jeu.
+	:type planchetteAPoser: Planchette.
+
+	:return: None OU decalage.
+	:rtype: None OU Entier.
+	"""
 	decalage = Dialogue.saisisEntier("{joueur} | Précisez le décalage".format(joueur=Joueur.nom(joueurCourant(jeu))))
 	if decalage == None:
 		return None
