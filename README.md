@@ -15,3 +15,9 @@ Par défaut, les fichiers de sauvegarde et de replay ne sont pas fournis. C'est 
   - Couleur différente pour chaque joueur.
   - Ajout de texte sur l'interface pour aider le joueur.
   - Mini "launcher" qui propose au joueur différentes actions au démarrage : replay, sauvegarde, partie normale.
+  Le "launcher" n'est visible qu'il existe une sauvegarde ou un replay.
+
+Attention :
+Le replay à partir d'une partie sauvegardée ne fonctionne pas correctement :
+En effet, il n'affiche que le replay de la partie jouée après le jeu sur la partie sauvegardée.
+Ce défaut de fonctionnalité sera traité plus tard : manque de temps restant (bug découvert tardivement), projet déjà très chronophage.

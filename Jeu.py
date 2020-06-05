@@ -47,11 +47,15 @@ def passeJoueurSuivant(jeu):
 
 # Etape 5.2
 
-def joue(jeu, is_replay=False):
+def joue(jeu, is_replay=False, is_save=False):
 	majVues(jeu)
 	if is_replay:
+		print("Hello")
 		replay(jeu)
+	elif is_save:
+		activite(jeu, debutPartie=False) #Si c'est une sauvegarde on est plus au début de la partie.
 	else:
+		print("youhou")
 		#Si on joue, on supprime le dernier replay pour repartir sur un fichier vide.
 		if os.path.exists("replay.txt"):
 			os.remove("replay.txt")
@@ -76,7 +80,7 @@ def majVues(jeu):
 
 # Etape 5.3
 
-def activite(jeu):
+def activite(jeu, debutPartie=True):
 	"""
 	Applique le diagramme d'activité de la Notice de l'Etape 5.
 	:param jeu: Le Jeu.
@@ -84,7 +88,6 @@ def activite(jeu):
 	"""
 	nombrePlanchettes = Pioche.nombrePlanchettes(Joueur.pioche(joueurCourant(jeu)))
 	desequilibre = False
-	debutPartie = True
 	partieFinie = False
 	while nombrePlanchettes != 0 and desequilibre == False and partieFinie != True:
 		VueJeu.affichageMessage(Fenetre.toile(fenetre(jeu)), "Tour : "+Joueur.nom(joueurCourant(jeu)), 120, 50, 24)

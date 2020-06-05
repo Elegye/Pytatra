@@ -34,7 +34,7 @@ def partieSauvegarde(event, fenetre):
         sauvegarde[1],
         sauvegarde[2]
     )
-    Jeu.joue(jeu)
+    Jeu.joue(jeu, is_save=True)
 
 if path.exists('save.txt') or path.exists('replay.txt'): #On regarde s'il existe une sauvegarde ou un replay
     fenetre = Fenetre.cree(300,300)
